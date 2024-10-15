@@ -21,7 +21,7 @@ FROM eclipse-temurin:17-alpine
 WORKDIR /app
 
 # Copy the jar file from the build stage
-COPY --from=build /app/target/coletor-0.0.1-SNAPSHOT.jar .
+COPY --from=build /app/target/app.jar .
 
 ENV PROFILE=test
 
