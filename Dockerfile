@@ -18,13 +18,14 @@ RUN mvn package
 # Use a smaller runtime image for the final stage
 FROM eclipse-temurin:17-alpine
 
-WORKDIR /app
+# Defina o diretório de trabalho
+WORKDIR /coletor
 
-# Copy the jar file from the build stage
-COPY --from=build /app/target/app.jar .
+# Copie o jar do estágio de build
+COPY --from=build /app/out/artifacts/coletor_jar/coletor.jar .
 
 ENV PROFILE=test
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=${PROFILE}", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=${PROFILE}", "-jar", "coletor.jar"]
