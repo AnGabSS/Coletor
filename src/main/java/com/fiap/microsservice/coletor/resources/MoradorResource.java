@@ -18,11 +18,15 @@ public class MoradorResource {
     @Autowired
     private MoradorService service;
 
-    @PostMapping
-    public ResponseEntity<Morador> create(@RequestBody Morador morador) {
-        service.insert(morador);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(morador.getId()).toUri();
-        return ResponseEntity.created(uri).body(morador);
+     @PostMapping
+    public ResponseEntity<?> create(@RequestBody Morador morador) {
+       try{
+           service.insert(morador);
+           URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(morador.getId()).toUri();
+           return ResponseEntity.created(uri).body(morador);
+       } catch (RuntimeException e) {
+           return ResponseEntity.badRequest().body(e);
+       }
     }
 
     @GetMapping
