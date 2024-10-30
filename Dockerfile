@@ -11,7 +11,9 @@ RUN mvn install
 VOLUME /tmp
 EXPOSE 8080
 
-ARG JAR_FILE=target/coletor-0.0.1-SNAPSHOT.jar
-ADD ${JAR_FILE} app.jar
+WORKDIR /app
+
+# Copie o jar do build anterior
+COPY --from=build /app/target/coletor-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "/app.jar"]
