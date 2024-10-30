@@ -1,5 +1,13 @@
 FROM eclipse-temurin:21-alpine
 
+# Copie o arquivo pom.xml e instale as dependências
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copie o restante do código e compile
+COPY src ./src
+RUN mvn install
+
 VOLUME /tmp
 EXPOSE 8080
 
