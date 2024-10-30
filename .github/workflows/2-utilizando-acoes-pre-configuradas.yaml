@@ -22,4 +22,10 @@ jobs:
         run: mvn clean install
 
       - name: Build Docker Compose
+        env:
+          SPRING_PROFILES_ACTIVE: "prd"
+          SPRING_DATASOURCE_URL: "jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL"
+          SPRING_DATASOURCE_USERNAME: "RM552218"
+          SPRING_DATASOURCE_PASSWORD: "120904"
+          SPRING_DATASOURCE_DRIVER_CLASS_NAME: "oracle.jdbc.OracleDriver"
         run: docker-compose build
