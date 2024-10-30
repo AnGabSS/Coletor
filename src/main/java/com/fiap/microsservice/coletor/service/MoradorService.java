@@ -22,9 +22,12 @@ public class MoradorService {
 
 
     public Morador insert(Morador morador) {
-        return repository.save(morador);
+        if(validateFields(morador)){
+            return repository.save(morador);
+        } else {
+            throw new RuntimeException("Faltando informação para cadastro de morador");
+        }
     }
-
     public Morador getMorador(Long id) {
         Optional<Morador> morador = repository.findById(id);
         return morador.orElseThrow(() -> new ResourceNotFoundException(id));
@@ -59,6 +62,15 @@ public class MoradorService {
         oldMorador.setEmail(newMorador.getEmail());
         oldMorador.setTelefone(newMorador.getTelefone());
         oldMorador.setEndereco(newMorador.getEndereco());
+
+    }
+
+    private boolean validateFields(Morador morador){
+        return
+                !morador.getNome().isEmpty() &&
+                !morador.getEmail().isEmpty() &&
+                !morador.getEndereco().isEmpty() &&
+                !morador.getTelefone().isEmpty();
 
     }
 
